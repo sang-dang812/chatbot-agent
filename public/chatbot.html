@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Chat Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  
+</head>
+<body>
+  <div class="chat-wrapper">
+    <div class="chat-header">
+      <h1>🤖 Trợ lý AI cá nhân</h1>
+     <h4 id="userName" class="user-email"></h4>
+      <div class="chat-header-actions"> <!-- Bao quanh các nút -->
+        <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+        <button class="logout-btn" onclick="window.location.href='index.html'">Trở về</button>
+      </div>
+    </div>
+
+    <div class="chat-box" id="chatBox">
+      <div class="message received">
+        <div class="message-content">Xin chào! Bạn cần trợ giúp gì hôm nay?</div>
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Nhập tin nhắn..." autocomplete="off"/>
+      <button id="sendButton">Gửi</button>
+    </div>
+  </div>
+  <script>
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/index.html';
+        alert("You need to login first")
+      }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/user/getUserEmail', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+        });
+
+        const data = await response.json();
+        console.log(data);
+        if (data) {
+        document.getElementById('userName').textContent = data;
+        }
+    } catch (err) {
+        console.error("Không thể lấy thông tin người dùng:", err);
+    }
+    });
+
+
+
+    document.getElementById('sendButton').addEventListener('click', sendMessage);
+
+    document.getElementById('userInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') sendMessage();
+});
+
+async function sendMessage() {
+  const userInput = document.getElementById('userInput').value;
+  if (!userInput.trim()) return; // Do not send empty messages
+
+  // Add user message to chat box
+  const userMessage = createMessage(userInput, 'sent');
+  document.getElementById('chatBox').appendChild(userMessage);
+
+  // Clear input field
+  document.getElementById('userInput').value = '';
+scrollToBottom();
+  // Simulate AI response (you can replace this with an actual API call)
+  const response = await fetch('/agent/sendMsg', {
+        method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+      body: JSON.stringify({userInput})
+    })
+    
+  if (!response.ok) {
+    throw new Error('Không thể nhận được phản hồi từ AI');
+  }
+
+  const data = await response.json();// Giả sử API trả về dữ liệu dưới dạng { reply: "Câu trả lời của AI" }
+  try {
+    const rawOutput = data.output; // output từ API
+    const formattedHTML = marked.parse(rawOutput); // Chuyển đổi sang HTML
+
+    // Thêm câu trả lời từ AI vào giao diện
+    const aiMessage = createMessage(formattedHTML, 'received', true);
+    document.getElementById('chatBox').appendChild(aiMessage);
+    
+    // Cuộn xuống tin nhắn mới
+    scrollToBottom();
+  } catch (error) {
+    console.error("Lỗi khi gọi API:", error);
+  }
+}
+
+function createMessage(text, type, isHTML = false) {
+  const messageDiv = document.createElement('div');
+  messageDiv.classList.add('message', type);
+
+  const messageContent = document.createElement('div');
+  messageContent.classList.add('message-content');
+
+  if (isHTML) {
+    messageContent.innerHTML = text;
+  } else {
+    messageContent.textContent = text;
+  }
+
+  messageDiv.appendChild(messageContent);
+  return messageDiv;
+}
+
+
+function scrollToBottom() {
+  const chatBox = document.getElementById('chatBox');
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+function logout() {
+      localStorage.removeItem('token');
+      window.location.href = '/index.html';
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+</body>
+</html>

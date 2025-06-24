@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Agent Portal</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+
+  <div class="container" style="max-width: 600px;">
+    <h2 class="text-center text-primary mb-4">🧠 AI Agent Portal</h2>
+
+    <!-- Đăng nhập -->
+    <div id="login" class="card shadow mb-4">
+      <div class="card-body">
+        <h4 class="card-title text-center mb-3">Đăng nhập</h4>
+        <div class="mb-3">
+          <input type="email" id="loginEmail" placeholder="Email" class="form-control">
+        </div>
+        <div class="mb-3">
+          <input type="password" id="loginPassword" placeholder="Mật khẩu" class="form-control">
+        </div>
+        <div class="d-grid mb-2">
+          <button onclick="login()" class="btn btn-success">Đăng nhập</button>
+        </div>
+        <p class="text-center mb-0">Chưa có tài khoản? 
+          <a href="#" onclick="toggleForm('register')">Đăng ký ngay</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Đăng ký -->
+    <div id="register" class="card shadow mb-4 d-none">
+      <div class="card-body">
+        <h4 class="card-title text-center mb-3">Đăng ký</h4>
+        <div class="mb-3">
+          <input type="email" id="regEmail" placeholder="Email" class="form-control">
+        </div>
+        <div class="mb-3">
+          <input type="password" id="regPassword" placeholder="Mật khẩu" class="form-control">
+        </div>
+        <div class="d-grid mb-2">
+          <button onclick="register()" class="btn btn-primary">Đăng ký</button>
+        </div>
+        <p class="text-center mb-0">Đã có tài khoản? 
+          <a href="#" onclick="toggleForm('login')">Đăng nhập</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Agent Info -->
+    <div id="agentInfo" class="card shadow d-none">
+      <div class="card-body">
+        <h4 class="card-title text-center mb-3">Thông tin Agent 👤</h4>
+        <pre id="agentOutput" class="bg-light border p-3 rounded text-break small"></pre>
+        <div class="d-grid">
+          <button onclick="logout()" class="btn btn-danger">Đăng xuất</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let token = null;
+
+    function toggleForm(form) {
+      const login = document.getElementById('login');
+      const register = document.getElementById('register');
+      login.classList.add('d-none');
+      register.classList.add('d-none');
+      if (form === 'login') login.classList.remove('d-none');
+      else register.classList.remove('d-none');
+    }
+
+    async function register() {
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+
+      const res = await fetch('/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      alert(data.message || data.error);
+      if (!data.error) toggleForm('login');
+    }
+
+    async function login() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const res = await fetch('/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        window.location.href = '/index.html';
+      } else {
+        alert(data.error || 'Đăng nhập thất bại');
+      }
+    }
+
+
+    function logout() {
+      token = null;
+      document.getElementById('agentInfo').classList.add('d-none');
+      document.getElementById('login').classList.remove('d-none');
+    }
+  </script>
+</body>
+</html>

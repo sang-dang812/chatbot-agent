@@ -8,8 +8,22 @@ require('dotenv').config();
 // Đăng ký
 router.post('/register', async (req, res) => {
   const { email, password } = req.body;
+
   try {
+    // Kiểm tra email đã tồn tại chưa
+    const existingUser = await pool.query(
+      'SELECT * FROM users WHERE email = $1',
+      [email]
+    );
+
+    if (existingUser.rows.length > 0) {
+      return res.status(400).json({ error: 'Email đã được sử dụng' });
+    }
+
+    // Hash password
     const hash = await bcrypt.hash(password, 10);
+
+    // Tạo user mới
     const userResult = await pool.query(
       'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING *',
       [email, hash]
@@ -17,17 +31,20 @@ router.post('/register', async (req, res) => {
 
     const user = userResult.rows[0];
 
-    // Tạo agent cá nhân luôn
+    // Tạo agent mặc định
     await pool.query(
       'INSERT INTO agents (user_id, personality_prompt) VALUES ($1, $2)',
       [user.id, 'Bạn là một AI trợ lý thân thiện.']
     );
 
     res.status(201).json({ message: 'Đăng ký thành công' });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Lỗi máy chủ' });
   }
 });
+
 
 // Đăng nhập
 router.post('/login', async (req, res) => {

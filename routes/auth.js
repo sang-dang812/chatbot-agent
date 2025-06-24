@@ -49,23 +49,37 @@ router.post('/register', async (req, res) => {
 // Đăng nhập
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
+
   try {
+    // Tìm user theo email
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     const user = result.rows[0];
-    if (!user) return res.status(401).json({ error: 'Email không tồn tại' });
-    if (user.password_hash == password) {
-        const token = jwt.sign(
-        { userId: user.id },
-        process.env.JWT_SECRET,
-        { expiresIn: '7d' } // => Token sống 7 ngày
-        );
 
-        res.json({ token });
+    if (!user) {
+      return res.status(401).json({ error: 'Email không tồn tại' });
     }
-    else return res.status(400).json({error:"sai mật khẩu"})
+
+    // So sánh mật khẩu được mã hóa
+    const isMatch = await bcrypt.compare(password, user.password_hash);
+
+    if (!isMatch) {
+      return res.status(400).json({ error: 'Sai mật khẩu' });
+    }
+
+    // Tạo JWT token
+    const token = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.json({ token });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Lỗi khi đăng nhập:', err);
+    res.status(500).json({ error: 'Lỗi máy chủ' });
   }
 });
+
 
 module.exports = router;

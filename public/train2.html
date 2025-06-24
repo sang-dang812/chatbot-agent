@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Huấn luyện trợ lý AI</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card shadow border-0">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+              <h4 class="mb-0 text-white">🧠 Huấn luyện trợ lý AI cá nhân</h4>
+              <button class="btn btn-outline-light btn-sm" onclick="window.location.href='userinfo.html'">⬅ Trở về</button>
+            </div>
+            <div class="card-body">
+              <form id="trainForm" class="d-flex gap-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="factInput"
+                  placeholder="Nhập thông tin bạn muốn trợ lý ghi nhớ (VD: Tôi tên là Hùng)"
+                  required
+                />
+                <button type="submit" class="btn btn-primary">Lưu</button>
+              </form>
+              <hr />
+              <h5 class="mb-3">📋 Tính cách AI của bạn:</h5>
+              <p id="memory"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Bạn cần đăng nhập trước.');
+        window.location.href = '/index.html';
+      }
+
+      document.addEventListener('DOMContentLoaded', async () => {
+        const memory = document.getElementById('memory');
+        try {
+        const response = await fetch('/agent/getAgentInfo', {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+         })
+    
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            memory.innerHTML = data.personality_prompt;
+
+        }}
+        catch(error) {
+            console.log(error);
+        }
+
+      })
+
+      const memoryList = document.getElementById('memoryList');
+      const trainForm = document.getElementById('trainForm');
+
+
+      trainForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fact = document.getElementById('factInput').value.trim();
+        if (!fact) return;
+
+        await fetch('/agent/addNewPersonality', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ fact })
+        });
+
+        document.getElementById('factInput').value = '';
+       window.location.href = window.location.href;
+// Tương đương với người dùng nhấn F5
+
+      });
+
+      async function deleteFact(id) {
+        await fetch(`/memory/delete/${id}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        
+      }
+
+      
+    </script>
+  </body>
+</html>

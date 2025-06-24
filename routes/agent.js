@@ -68,5 +68,25 @@ router.post('/addNewMemory', authMiddleware, async (req, res) => {
   }
 });
 
+router.post('/addNewPersonality', authMiddleware, async (req, res) => {
+  const user_id = req.user.userId;
+  const newFact = req.body.fact; // ví dụ: "thích đi chơi"
+  console.log(newFact);
+  try {
+    const query = `
+      UPDATE agents
+      SET personality_prompt = $1
+      WHERE user_id = $2
+    `;
+
+    await pool.query(query, [newFact, user_id]);
+
+    res.status(200).json({ message: 'Personality updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Lỗi khi cập nhật dữ liệu' });
+  }
+});
+
 
 module.exports = router;

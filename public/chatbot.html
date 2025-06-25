@@ -159,18 +159,15 @@
     async function sendMessage() {
       const userInput = document.getElementById('userInput').value;
       if (!userInput.trim()) return;
+
+      // Gửi tin nhắn của người dùng
       const userMessage = createMessage(userInput, 'sent');
       document.getElementById('chatBox').appendChild(userMessage);
       document.getElementById('userInput').value = '';
 
-      // Clear any existing loading message before adding a new one
-      const existingLoadingMessage = document.getElementById('loading-message');
-      if (existingLoadingMessage) {
-        existingLoadingMessage.remove();
-      }
-
+      // Thêm tin nhắn "Đang suy nghĩ"
       const loadingMessage = createMessage("🤔 Tôi đang suy nghĩ câu trả lời...", 'received');
-      loadingMessage.id = 'loading-message'; // Assign an id to this message for easy reference
+      loadingMessage.id = 'loading-message'; // Gắn id để dễ dàng thay thế sau
       document.getElementById('chatBox').appendChild(loadingMessage);
       scrollToBottom();
 
@@ -188,7 +185,7 @@
         const rawOutput = data.output;
         const formattedHTML = marked.parse(rawOutput);
 
-        // Replace the loading message with the actual response
+        // Thay thế tin nhắn "đang suy nghĩ" bằng câu trả lời thực tế
         const loadingElement = document.getElementById('loading-message');
         if (loadingElement) {
           loadingElement.querySelector('.message-content').innerHTML = formattedHTML;

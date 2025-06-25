@@ -84,27 +84,60 @@
        <!-- Hero Start -->
     <div class="container-fluid pt-5 bg-primary hero-header mb-5">
         <div class="container pt-5">
-            <div class="row g-5 pt-5">
-                <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
-                    <div class="btn btn-sm border rounded-pill text-white px-3 mb-3 animated slideInRight">Xin chào</div>
-                    <h1 id="usermail" class="display-4 text-white mb-4 animated slideInRight"></h1>
-                    <p class="text-white mb-4 animated slideInRight">Tính cách AI của bạn:</p>
-                    <p id="personality" class="text-white mb-4 animated slideInRight"></p>
-                    <p class="text-white mb-4 animated slideInRight">Bộ nhớ:</p>
-                    <p id="memory" class="text-white mb-4 animated slideInRight"></p>
-                    <a href="chatbot.html" class="btn btn-outline-light py-sm-3 px-sm-5 rounded-pill animated slideInRight">Sử dụng</a>
-                    <a href="train1.html" class="btn btn-outline-light py-sm-3 px-sm-5 rounded-pill animated slideInRight">Huấn luyện Bộ Nhớ</a>
-                    <a href="train2.html" class="btn btn-outline-light py-sm-3 px-sm-5 rounded-pill animated slideInRight">Huấn luyện Tính Cách</a>
-                </div>
-                <div class="col-lg-6 align-self-end text-center text-lg-end">
-                    <img class="img-fluid" src="img/hero-img.png" alt="">
-                </div>
-            </div>
+            
         </div>
     </div>
     <!-- Hero End -->
 
- <!-- Footer Start -->
+    <!-- About Me Start -->
+<div class="container py-5">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+            <img class="img-fluid rounded" src="./img/gojo.jpg" alt="Dang Ha Sang">
+        </div>
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">Giới thiệu</div>
+            <h2 class="mb-3">Đặng Hà Sang</h2>
+            <p class="mb-3">Tôi sinh năm 2003 và hiện đang là sinh viên tại <strong>Trường Đại học Bách Khoa TP.HCM (HCMUT)</strong>. Tôi quan tâm đến trí tuệ nhân tạo, công nghệ phần mềm và luôn tìm kiếm cơ hội học hỏi, khám phá cái mới.</p>
+            <p class="mb-3">Đây là nơi tôi chia sẻ các dự án AI, trải nghiệm học tập và phát triển bản thân.</p>
+             <div class="d-flex justify-content-center mt-3">
+                                            <a class="btn btn-square btn-primary m-1" href=""><i
+                                                    class="fab fa-facebook-f"></i></a>
+                                            <a class="btn btn-square btn-primary m-1" href=""><i
+                                                    class="fab fa-twitter"></i></a>
+                                            <a class="btn btn-square btn-primary m-1" href=""><i
+                                                    class="fab fa-instagram"></i></a>
+                                            <a class="btn btn-square btn-primary m-1" href=""><i
+                                                    class="fab fa-linkedin-in"></i></a>
+                                        </div>
+        </div>
+    </div>
+</div>
+<!-- About Me End -->
+
+<!-- Project start -->
+<div class="container py-5">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+            <img class="img-fluid rounded" src="./img/gojo.jpg" alt="Dang Ha Sang">
+        </div>
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">Về dự án</div>
+            <h2 class="mb-3">AI Agent</h2>
+            <p class="mb-3">AI Agent của tôi là một trợ lý ảo cá nhân được thiết kế để hỗ trợ người dùng trong các tác vụ hàng ngày, từ trả lời câu hỏi, ghi nhớ thông tin cá nhân đến cung cấp lời khuyên thông minh.
+
+Được xây dựng dựa trên công nghệ trí tuệ nhân tạo hiện đại, AI Agent có khả năng "ghi nhớ" thông tin do người dùng cung cấp, từ đó cá nhân hóa phản hồi và tương tác theo thời gian thực. </p>
+<p> Không chỉ đơn thuần là một chatbot, AI Agent còn đóng vai trò như một người bạn đồng hành kỹ thuật số – lịch sự, thân thiện và luôn sẵn sàng lắng nghe. Dự án được phát triển bởi Đặng Hà Sang, sinh viên Đại học Bách Khoa TP.HCM, với mục tiêu giúp mọi người tiếp cận công nghệ AI một cách gần gũi và hữu ích</p>
+              <a href="projectinfo.html" class="btn btn-primary rounded-pill px-4">Tìm hiểu thêm</a>
+        </div>
+    </div>
+</div>
+<!-- Project end -->
+
+
+
+
+     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-white-50 footer pt-5">
         <div class="container py-1">
             <div class="row g-5">
@@ -200,45 +233,7 @@
       userLink.textContent = 'Login';
       userLink.href = 'auth.html';
     }
-    const usermail = document.getElementById('usermail');
-    try {
-        const response = await fetch('/user/getUserInfo', {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    })
     
-    if (response.ok) {
-        const data = await response.json();
-        usermail.textContent = data.email;
-    }}
-    catch(error) {
-        console.log(error);
-    }
-    const personality = document.getElementById('personality');
-    const memory = document.getElementById('memory');
-    try {
-        const response = await fetch('/agent/getAgentInfo', {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    })
-    
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        personality.textContent = data.personality_prompt;
-        memory.innerHTML = `
-            <ul>
-                ${data.memory_json.memory.map(fact => `<li>${fact}</li>`).join("")}
-            </ul>
-            `;
-    }}
-    catch(error) {
-        console.log(error);
-    }
   });
     function loginout() {
         const login = document.getElementById('login-logout');
@@ -252,7 +247,6 @@
 
     function userinfo() {
         const info = document.getElementById('user-link');
-        console.log(info.textContent);
         if (info.textContent == 'User') window.location.href = '/auth.html';
         else window.location.href = '/userinfo.html';
     }

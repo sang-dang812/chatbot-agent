@@ -162,8 +162,11 @@
       const userMessage = createMessage(userInput, 'sent');
       document.getElementById('chatBox').appendChild(userMessage);
       document.getElementById('userInput').value = '';
-      scrollToBottom();
 
+      const loadingMessage = createMessage("🤔 Tôi đang suy nghĩ câu trả lời...", 'received');
+      loadingMessage.id = 'loading-message'; // Gắn id để thay thế sau
+      document.getElementById('chatBox').appendChild(loadingMessage);
+      scrollToBottom();
       try {
         const response = await fetch('/agent/sendMsg', {
           method: 'POST',
@@ -177,8 +180,12 @@
         const data = await response.json();
         const rawOutput = data.output;
         const formattedHTML = marked.parse(rawOutput);
-        const aiMessage = createMessage(formattedHTML, 'received', true);
-        document.getElementById('chatBox').appendChild(aiMessage);
+
+        // Ghi đè nội dung "loading" bằng phản hồi thực tế
+        const loadingElement = document.getElementById('loading-message');
+        if (loadingElement) {
+          loadingElement.querySelector('.message-content').innerHTML = formattedHTML;
+        }
         scrollToBottom();
       } catch (error) {
         console.error("Lỗi khi gọi API:", error);

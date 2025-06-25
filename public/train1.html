@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Huấn luyện trợ lý AI</title>
+    <title>Train AI</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
   </head>
@@ -13,8 +13,8 @@
         <div class="col-lg-8">
           <div class="card shadow border-0">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-              <h4 class="mb-0 text-white">🧠 Huấn luyện trợ lý AI cá nhân</h4>
-              <button class="btn btn-outline-light btn-sm" onclick="window.location.href='userinfo.html'">⬅ Trở về</button>
+              <h4 class="mb-0 text-white">🧠 Train your AI Agent</h4>
+              <button class="btn btn-outline-light btn-sm" onclick="window.location.href='userinfo.html'">⬅ Back</button>
             </div>
             <div class="card-body">
               <form id="trainForm" class="d-flex gap-2">
@@ -22,13 +22,13 @@
                   type="text"
                   class="form-control"
                   id="factInput"
-                  placeholder="Nhập thông tin bạn muốn trợ lý ghi nhớ (VD: Tôi tên là Hùng)"
+                  placeholder="Enter the information you want the assistant to remember (e.g., My name is Hung)"
                   required
                 />
-                <button type="submit" class="btn btn-primary">Lưu</button>
+                <button type="submit" class="btn btn-primary">Save</button>
               </form>
               <hr />
-              <h5 class="mb-3">📋 Những gì trợ lý đã ghi nhớ:</h5>
+              <h5 class="mb-3">📋 AI Agent's memory:</h5>
               <p id="memory"></p>
             </div>
           </div>

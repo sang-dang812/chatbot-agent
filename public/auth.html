@@ -42,28 +42,28 @@
     <div class="card p-4 shadow-lg bg-white">
       <div class="text-center mb-4">
         <div class="logo">🧠 AI Agent Portal</div>
-        <div class="text-muted small">Trợ lý AI cá nhân của bạn</div>
+        <div class="text-muted small">Make your own AI with our tools</div>
       </div>
 
       <!-- Login Form -->
       <div id="loginForm">
-        <h4 class="text-center mb-3">🔐 Đăng nhập</h4>
+        <h4 class="text-center mb-3">🔐 LOGIN</h4>
         <input type="email" id="loginEmail" placeholder="Email" class="form-control mb-3">
-        <input type="password" id="loginPassword" placeholder="Mật khẩu" class="form-control mb-3">
-        <button onclick="login()" class="btn btn-primary w-100">Đăng nhập</button>
-        <p class="text-center mt-3 mb-0">Chưa có tài khoản?
-          <span class="toggle-link" onclick="toggleForm('register')">Đăng ký ngay</span>
+        <input type="password" id="loginPassword" placeholder="Password" class="form-control mb-3">
+        <button onclick="login()" class="btn btn-primary w-100">OK</button>
+        <p class="text-center mt-3 mb-0">Don't have account?
+          <span class="toggle-link" onclick="toggleForm('register')">Register now</span>
         </p>
       </div>
 
       <!-- Register Form -->
       <div id="registerForm" class="d-none">
-        <h4 class="text-center mb-3">📝 Đăng ký</h4>
+        <h4 class="text-center mb-3">📝 REGISTER</h4>
         <input type="email" id="regEmail" placeholder="Email" class="form-control mb-3">
-        <input type="password" id="regPassword" placeholder="Mật khẩu" class="form-control mb-3">
-        <button onclick="register()" class="btn btn-success w-100">Tạo tài khoản</button>
-        <p class="text-center mt-3 mb-0">Đã có tài khoản?
-          <span class="toggle-link" onclick="toggleForm('login')">Đăng nhập</span>
+        <input type="password" id="regPassword" placeholder="Password" class="form-control mb-3">
+        <button onclick="register()" class="btn btn-success w-100">OK</button>
+        <p class="text-center mt-3 mb-0">Already have account?
+          <span class="toggle-link" onclick="toggleForm('login')">Login now</span>
         </p>
       </div>
     </div>

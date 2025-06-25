@@ -57,9 +57,19 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link active">About</a>
-                        <a href="service.html" class="nav-item nav-link">Services</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="service.html" class="nav-item nav-link active">Services</a>
                         <a href="chatbot.html" class="nav-item nav-link">Projects</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu bg-light mt-2">
+                                <a href="feature.html" class="dropdown-item">Features</a>
+                                <a href="team.html" class="dropdown-item">Our Team</a>
+                                <a href="faq.html" class="dropdown-item">FAQs</a>
+                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                                <a href="404.html" class="dropdown-item">404 Page</a>
+                            </div>
+                        </div>
                         <a id="login-logout" class="nav-item nav-link" onclick="loginout()">Login</a>
                         <a id="user-link" class="nav-item nav-link" onclick="userinfo()" >User</a>
                     </div>
@@ -79,52 +89,96 @@
     </div>
     <!-- Hero End -->
 
-    <!-- About Me Start -->
-<div class="container py-5">
-    <div class="row align-items-center g-5">
-        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-            <img class="img-fluid rounded" src="./img/gojo.jpg" alt="Dang Ha Sang">
+<!-- Services Start -->
+    <div class="container py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-12 wow fadeIn" data-wow-delay="0.1s">
+                <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">Dịch Vụ AI Agent</div>
+                <h2 class="mb-3">Các Dịch Vụ AI Agent Cung Cấp</h2>
+                <p class="mb-4">Khám phá các dịch vụ mạnh mẽ và tiện lợi mà AI Agent của chúng tôi mang lại, giúp nâng cao trải nghiệm người dùng và cải thiện hiệu quả công việc.</p>
+            </div>
         </div>
-        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">Giới thiệu</div>
-            <h2 class="mb-3">Đặng Hà Sang</h2>
-            <p class="mb-3">Tôi sinh năm 2003 và hiện đang là sinh viên tại <strong>Trường Đại học Bách Khoa TP.HCM (HCMUT)</strong>. Tôi quan tâm đến trí tuệ nhân tạo, công nghệ phần mềm và luôn tìm kiếm cơ hội học hỏi, khám phá cái mới.</p>
-            <p class="mb-3">Đây là nơi tôi chia sẻ các dự án AI, trải nghiệm học tập và phát triển bản thân.</p>
-             <div class="d-flex justify-content-center mt-3">
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-facebook-f"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-twitter"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-instagram"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-linkedin-in"></i></a>
-                                        </div>
+
+        <!-- Service Cards -->
+        <div class="row">
+            <!-- Service 1: AI Agent Tư Vấn Du Lịch -->
+            <div class="col-md-4 wow fadeIn" data-wow-delay="0.1s">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <i class="fas fa-suitcase-rolling fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">AI Agent Tư Vấn Du Lịch</h5>
+                        <p class="card-text">AI Agent cung cấp các gợi ý du lịch thông minh, giúp bạn lên kế hoạch cho chuyến đi tuyệt vời nhất với các địa điểm thú vị và hoạt động phù hợp.</p>
+                        <a href="projectinfo.html" class="btn btn-primary">Tìm Hiểu Thêm</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 2: Hỗ Trợ Cá Nhân -->
+            <div class="col-md-4 wow fadeIn" data-wow-delay="0.3s">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-check fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Hỗ Trợ Cá Nhân</h5>
+                        <p class="card-text">Quản lý công việc, lịch trình và các nhiệm vụ quan trọng của bạn thông qua trợ lý AI thông minh, giúp bạn duy trì sự cân bằng trong cuộc sống.</p>
+                        <a href="projectinfo.html" class="btn btn-primary">Tìm Hiểu Thêm</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 3: AI Tư Vấn Sức Khỏe -->
+            <div class="col-md-4 wow fadeIn" data-wow-delay="0.5s">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <i class="fas fa-heartbeat fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">AI Tư Vấn Sức Khỏe</h5>
+                        <p class="card-text">Với AI Agent, bạn sẽ nhận được các gợi ý dinh dưỡng và tập luyện giúp bạn duy trì sức khỏe và cải thiện thể chất một cách tối ưu.</p>
+                        <a href="projectinfo.html" class="btn btn-primary">Tìm Hiểu Thêm</a>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- Second Row -->
+        <div class="row mt-4">
+            <!-- Service 4: Chatbot Tự Động Hóa Doanh Nghiệp -->
+            <div class="col-md-4 wow fadeIn" data-wow-delay="0.1s">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <i class="fas fa-robot fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Chatbot Tự Động Hóa Doanh Nghiệp</h5>
+                        <p class="card-text">Giúp doanh nghiệp giao tiếp với khách hàng hiệu quả hơn bằng chatbot tự động, từ đó tăng hiệu suất làm việc và giảm thiểu chi phí vận hành.</p>
+                        <a href="projectinfo.html" class="btn btn-primary">Tìm Hiểu Thêm</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 5: Quản Lý Tài Chính Cá Nhân -->
+            <div class="col-md-4 wow fadeIn" data-wow-delay="0.3s">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <i class="fas fa-wallet fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Quản Lý Tài Chính Cá Nhân</h5>
+                        <p class="card-text">AI Agent giúp bạn theo dõi chi tiêu, lập kế hoạch tiết kiệm và đưa ra các chiến lược tài chính thông minh cho tương lai.</p>
+                        <a href="projectinfo.html" class="btn btn-primary">Tìm Hiểu Thêm</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 6: Hỗ Trợ Người Dùng Thông Minh -->
+            <div class="col-md-4 wow fadeIn" data-wow-delay="0.5s">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <i class="fas fa-headset fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Hỗ Trợ Người Dùng Thông Minh</h5>
+                        <p class="card-text">Cung cấp hỗ trợ nhanh chóng và hiệu quả cho người dùng thông qua hệ thống AI thông minh, giúp giải quyết vấn đề mọi lúc, mọi nơi.</p>
+                        <a href="projectinfo.html" class="btn btn-primary">Tìm Hiểu Thêm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
-<!-- About Me End -->
-
-<!-- Project start -->
-<div class="container py-5">
-    <div class="row align-items-center g-5">
-        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-            <img class="img-fluid rounded" src="./img/feature.png" alt="Dang Ha Sang">
-        </div>
-        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">Về dự án</div>
-            <h2 class="mb-3">AI Agent</h2>
-            <p class="mb-3">AI Agent của tôi là một trợ lý ảo cá nhân được thiết kế để hỗ trợ người dùng trong các tác vụ hàng ngày, từ trả lời câu hỏi, ghi nhớ thông tin cá nhân đến cung cấp lời khuyên thông minh.
-
-Được xây dựng dựa trên công nghệ trí tuệ nhân tạo hiện đại, AI Agent có khả năng "ghi nhớ" thông tin do người dùng cung cấp, từ đó cá nhân hóa phản hồi và tương tác theo thời gian thực. </p>
-<p> Không chỉ đơn thuần là một chatbot, AI Agent còn đóng vai trò như một người bạn đồng hành kỹ thuật số – lịch sự, thân thiện và luôn sẵn sàng lắng nghe. Dự án được phát triển bởi Đặng Hà Sang, sinh viên Đại học Bách Khoa TP.HCM, với mục tiêu giúp mọi người tiếp cận công nghệ AI một cách gần gũi và hữu ích</p>
-              <a href="projectinfo.html" class="btn btn-primary rounded-pill px-4">Tìm hiểu thêm</a>
-        </div>
-    </div>
-</div>
-<!-- Project end -->
-
-
+    <!-- Services End -->
 
 
      <!-- Footer Start -->

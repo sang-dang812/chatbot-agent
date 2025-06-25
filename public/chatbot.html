@@ -166,7 +166,7 @@
       document.getElementById('userInput').value = '';
 
       // Thêm tin nhắn "Đang suy nghĩ"
-      const loadingMessage = createMessage("🤔 Tôi đang suy nghĩ câu trả lời...", 'received');
+      const loadingMessage = createMessage("Let me think... 🤔", 'received');
       loadingMessage.id = 'loading-message-' + Date.now();  // Tạo ID duy nhất cho mỗi tin nhắn
       document.getElementById('chatBox').appendChild(loadingMessage);
       scrollToBottom();

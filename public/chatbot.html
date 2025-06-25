@@ -5,15 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI Chat Assistant</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
-  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+    }
+    .chat-wrapper {
+      width: 1000px!important;
+      height: 90vh;
+      margin: 20px auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+      padding: 1rem;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+    }
+    .chat-header h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .chat-header-actions {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
+    .logout-btn {
+      background: #ffffff33;
+      border: none;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      margin-left: 0.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .logout-btn:hover {
+      background: #ffffff55;
+    }
+    .chat-box {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      background-color: #f9fafb;
+    }
+    .message {
+      margin-bottom: 1rem;
+      display: flex;
+      max-width: 75%;
+    }
+    .message.sent {
+      align-self: flex-end;
+      justify-content: flex-end;
+    }
+    .message.received {
+      align-self: flex-start;
+    }
+    .message-content {
+      background: #e1f5fe;
+      padding: 0.75rem 1rem;
+      border-radius: 16px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+    .message.sent .message-content {
+      background: #c5e1a5;
+    }
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding: 0.75rem 1rem;
+      background: #fff;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      outline: none;
+      margin-right: 1rem;
+    }
+    .chat-input button {
+      background: #3f51b5;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .chat-input button:hover {
+      background: #303f9f;
+    }
+  </style>
 </head>
 <body>
   <div class="chat-wrapper">
     <div class="chat-header">
       <h1>🤖 Trợ lý AI cá nhân</h1>
-     <h4 id="userName" class="user-email"></h4>
-      <div class="chat-header-actions"> <!-- Bao quanh các nút -->
+      <h6 id="userName" class="user-email">Đang tải thông tin...</h6>
+      <div class="chat-header-actions">
         <button class="logout-btn" onclick="logout()">Đăng xuất</button>
         <button class="logout-btn" onclick="window.location.href='index.html'">Trở về</button>
       </div>
@@ -30,109 +130,77 @@
       <button id="sendButton">Gửi</button>
     </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = '/index.html';
-        alert("You need to login first")
-      }
+    
 
     window.addEventListener('DOMContentLoaded', async () => {
-    try {
+      try {
         const response = await fetch('/user/getUserEmail', {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+          method: 'GET',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await response.json();
+        if (data) document.getElementById('userName').textContent = data;
+      } catch (err) {
+        console.error("Không thể lấy thông tin người dùng:", err);
+      }
+    });
+
+    document.getElementById('sendButton').addEventListener('click', sendMessage);
+    document.getElementById('userInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    async function sendMessage() {
+      const userInput = document.getElementById('userInput').value;
+      if (!userInput.trim()) return;
+      const userMessage = createMessage(userInput, 'sent');
+      document.getElementById('chatBox').appendChild(userMessage);
+      document.getElementById('userInput').value = '';
+      scrollToBottom();
+
+      try {
+        const response = await fetch('/agent/sendMsg', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ userInput })
         });
 
         const data = await response.json();
-        console.log(data);
-        if (data) {
-        document.getElementById('userName').textContent = data;
-        }
-    } catch (err) {
-        console.error("Không thể lấy thông tin người dùng:", err);
+        const rawOutput = data.output;
+        const formattedHTML = marked.parse(rawOutput);
+        const aiMessage = createMessage(formattedHTML, 'received', true);
+        document.getElementById('chatBox').appendChild(aiMessage);
+        scrollToBottom();
+      } catch (error) {
+        console.error("Lỗi khi gọi API:", error);
+      }
     }
-    });
 
+    function createMessage(text, type, isHTML = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message', type);
+      const messageContent = document.createElement('div');
+      messageContent.classList.add('message-content');
+      messageContent[isHTML ? 'innerHTML' : 'textContent'] = text;
+      messageDiv.appendChild(messageContent);
+      return messageDiv;
+    }
 
+    function scrollToBottom() {
+      const chatBox = document.getElementById('chatBox');
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
 
-    document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-    document.getElementById('userInput').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') sendMessage();
-});
-
-async function sendMessage() {
-  const userInput = document.getElementById('userInput').value;
-  if (!userInput.trim()) return; // Do not send empty messages
-
-  // Add user message to chat box
-  const userMessage = createMessage(userInput, 'sent');
-  document.getElementById('chatBox').appendChild(userMessage);
-
-  // Clear input field
-  document.getElementById('userInput').value = '';
-scrollToBottom();
-  // Simulate AI response (you can replace this with an actual API call)
-  const response = await fetch('/agent/sendMsg', {
-        method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-    },
-      body: JSON.stringify({userInput})
-    })
-    
-  if (!response.ok) {
-    throw new Error('Không thể nhận được phản hồi từ AI');
-  }
-
-  const data = await response.json();// Giả sử API trả về dữ liệu dưới dạng { reply: "Câu trả lời của AI" }
-  try {
-    const rawOutput = data.output; // output từ API
-    const formattedHTML = marked.parse(rawOutput); // Chuyển đổi sang HTML
-
-    // Thêm câu trả lời từ AI vào giao diện
-    const aiMessage = createMessage(formattedHTML, 'received', true);
-    document.getElementById('chatBox').appendChild(aiMessage);
-    
-    // Cuộn xuống tin nhắn mới
-    scrollToBottom();
-  } catch (error) {
-    console.error("Lỗi khi gọi API:", error);
-  }
-}
-
-function createMessage(text, type, isHTML = false) {
-  const messageDiv = document.createElement('div');
-  messageDiv.classList.add('message', type);
-
-  const messageContent = document.createElement('div');
-  messageContent.classList.add('message-content');
-
-  if (isHTML) {
-    messageContent.innerHTML = text;
-  } else {
-    messageContent.textContent = text;
-  }
-
-  messageDiv.appendChild(messageContent);
-  return messageDiv;
-}
-
-
-function scrollToBottom() {
-  const chatBox = document.getElementById('chatBox');
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-function logout() {
+    function logout() {
       localStorage.removeItem('token');
       window.location.href = '/index.html';
     }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
+  </script>
 </body>
 </html>

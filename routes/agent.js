@@ -11,7 +11,7 @@ router.post('/sendMsg', authMiddleware, async (req, res) => {
   try {
     const result = await pool.query('SELECT id FROM agents WHERE user_id = $1', [userId]);
     const agentId = result.rows[0]?.id;
-    const calendar = await pool.query('SELECT calendar_link FROM users WHERE user_id = $1', [userId]);
+    const calendar = await pool.query('SELECT calendar_link FROM users WHERE id = $1', [userId]);
     const calendar_link = calendar.rows[0]?.calendar_link;
     const response = await fetch('https://n8n.danghs.id.vn/webhook/createDate', {
       method: 'POST',

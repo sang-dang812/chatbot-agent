@@ -254,7 +254,7 @@ Built on advanced artificial intelligence technologies, the AI Agent can “reme
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}` // nếu có
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify({data:data})
         });
 
         const result = await res.json();

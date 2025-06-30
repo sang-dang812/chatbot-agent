@@ -15,3 +15,5 @@ router.post("/create",authMiddleware, async(req,res) => {
         res.status(500).json({ error: 'Lỗi khi cập nhật dữ liệu' });
   }
 })
+
+module.exports = router;

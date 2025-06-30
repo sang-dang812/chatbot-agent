@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>AI Agent - by DHS</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Ubuntu:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark p-0">
+                <a href="index.html" class="navbar-brand">
+                    <h1 class="text-white">DANGHS<span class="text-dark">.</span>ID<span class="text-dark">.</span>VN</h1>
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="index.html" class="nav-item nav-link">Home</a>
+                        <a href="about.html" class="nav-item nav-link active">About</a>
+                        <a href="service.html" class="nav-item nav-link">Services</a>
+                        <a href="chatbot.html" class="nav-item nav-link">Projects</a>
+                        <a id="login-logout" class="nav-item nav-link" onclick="loginout()">Login</a>
+                        <a id="user-link" class="nav-item nav-link" onclick="userinfo()" >User</a>
+                    </div>
+                    <butaton type="button" class="btn text-white p-0 d-none d-lg-block" data-bs-toggle="modal"
+                        data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+       <!-- Hero Start -->
+    <div class="container-fluid pt-5 bg-primary hero-header mb-5">
+        <div class="container pt-5">
+            
+        </div>
+    </div>
+    <!-- Hero End -->
+
+    <!-- About Me Start -->
+<div class="container my-5">
+    <div class="card shadow">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">📅 Thêm sự kiện vào Google Calendar</h4>
+      </div>
+      <div class="card-body">
+        <form id="eventForm">
+          
+
+        <div class="mb-3">
+            <label for="link" class="form-label">Link google calendar</label>
+            <input type="text" class="form-control" id="link" name="link" placeholder="VD: Họp nhóm dự án" required>
+        </div>
+
+          <button type="submit" class="btn btn-success w-100">✅ Thêm sự kiện</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="response" class="alert mt-4 d-none" role="alert"></div>
+  </div>
+<!-- About Me End -->
+
+<!-- Project start -->
+<div class="container py-5">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+            <img class="img-fluid rounded" src="./img/feature.png" alt="Dang Ha Sang">
+        </div>
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">About my project</div>
+            <h2 class="mb-3">AI Agent</h2>
+            <p class="mb-3">My AI Agent is a personal virtual assistant designed to support users in daily tasks — from answering questions and remembering personal information to offering intelligent advice.
+
+Built on advanced artificial intelligence technologies, the AI Agent can “remember” information provided by the user, allowing it to personalize responses and interact in real-time.</p>
+
+<p>More than just a chatbot, the AI Agent serves as a digital companion — polite, friendly, and always ready to listen. This project was developed by Đặng Hà Sang, a student at Ho Chi Minh City University of Technology (HCMUT), with the goal of making AI more accessible and genuinely helpful to everyone.</p>
+              <a href="projectinfo.html" class="btn btn-primary rounded-pill px-4">Read more</a>
+        </div>
+    </div>
+</div>
+<!-- Project end -->
+
+
+
+
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-white-50 footer pt-5">
+    <div class="container py-1">
+        <div class="row g-5">
+            <div class="col-md-6 col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <a href="index.html" class="d-inline-block mb-3">
+                    <h1 class="text-white">DANGHS<span class="text-primary">.</span>ID<span class="text-primary">.</span>VN</h1>
+                </a>
+                <p class="mb-0">
+                    The AI Agent is developed by Dang Ha Sang – a student at Ho Chi Minh City University of Technology.  
+                    Your friendly and intelligent personal assistant, always ready to support you 24/7.
+                </p>
+            </div>
+            <div class="col-md-6 col-lg-6 wow fadeIn" data-wow-delay="0.3s">
+                <h5 class="text-white mb-4">Get In Touch</h5>
+                <p><i class="fa fa-map-marker-alt me-3"></i>District 10, Ho Chi Minh City</p>
+                <p><i class="fa fa-phone-alt me-3"></i>+84 899993702</p>
+                <p><i class="fa fa-envelope me-3"></i>sang.danghs0812@hcmut.edu.vn</p>
+                <div class="d-flex pt-2">
+                    <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container wow fadeIn" data-wow-delay="0.1s">
+        <div class="copyright">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; <a class="border-bottom" href="#">danghs.id.vn</a>, All Rights Reserved.
+                    Designed by <a class="border-bottom" href="#">Dang Ha Sang</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top pt-2"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+   <script>
+       const token = localStorage.getItem('token');
+  document.addEventListener('DOMContentLoaded', async () => {
+    const userLink = document.getElementById('user-link');
+    const login = document.getElementById('login-logout');
+
+    if (!token) {
+      login.textContent = 'Login';
+      userLink.href = 'auth.html';
+      return;
+    }
+    else {
+        login.textContent = 'Logout';
+    }
+
+    try {
+      const response = await fetch('/user/getUserEmail', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const username = data || 'User';
+        userLink.textContent = username;
+        userLink.href = '#'; // hoặc trang profile nếu có
+      } else {
+        // Token hết hạn hoặc không hợp lệ
+        userLink.textContent = 'Login';
+        userLink.href = 'auth.html';
+        localStorage.removeItem('token');
+      }
+    } catch (error) {
+      console.error('Lỗi khi lấy thông tin người dùng:', error);
+      userLink.textContent = 'Login';
+      userLink.href = 'auth.html';
+    }
+    
+  });
+    function loginout() {
+        const login = document.getElementById('login-logout');
+        console.log(login.textContent);
+        if (login.textContent == 'Logout') {
+            localStorage.removeItem('token');
+            window.location.href = '/index.html';
+            }
+        else {window.location.href = '/auth.html'}
+        }
+
+    function userinfo() {
+        const info = document.getElementById('user-link');
+        if (info.textContent == 'User') window.location.href = '/auth.html';
+        else window.location.href = '/userinfo.html';
+    }
+
+    document.getElementById('eventForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const data = document.getElementById('link').value;
+    
+
+      try {
+        const res = await fetch('/calendar/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // nếu có
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        const responseDiv = document.getElementById('response');
+        responseDiv.classList.remove('d-none');
+        responseDiv.classList.add('alert-success');
+        responseDiv.innerHTML = `Đã thêm link Google calendar thành công`;
+
+      } catch (error) {
+        const responseDiv = document.getElementById('response');
+        responseDiv.classList.remove('d-none');
+        responseDiv.classList.add('alert-danger');
+        responseDiv.textContent = '❌ Lỗi khi thêm. Vui lòng thử lại.';
+        console.error(error);
+      }
+    });
+
+
+</script>
+
+</body>
+
+</html>

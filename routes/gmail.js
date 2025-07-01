@@ -7,7 +7,7 @@ require('dotenv').config();
 const client_id = process.env.GOOGLE_CLIENT_ID;
 const client_secret = process.env.GOOGLE_CLIENT_SECRET;
 
-router.get('/oauth2/callback', authMiddleware ,async (req, res) => {
+router.get('/callback', authMiddleware ,async (req, res) => {
   const code = req.query.code;
   const userId = req.user.userId;
 

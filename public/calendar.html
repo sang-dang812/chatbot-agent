@@ -49,6 +49,20 @@
       margin-bottom: 1rem;
     }
 
+        /* CSS bổ sung */
+    .nav-item.active {
+      background: white;
+      color: #3f51b5;
+    }
+
+    .nav-item.active .nav-icon,
+    .nav-item.active .nav-label {
+      color: #3f51b5;
+      font-weight: 600;
+    }
+
+
+
     .nav-item {
       width: 100%;
       display: flex;
@@ -253,26 +267,30 @@
 <body>
   <div class="layout">
     <div class="sidebar" id="sidebar">
-      <div class="sidebar-toggle" onclick="toggleSidebar()">
-        <i class="bi bi-list"></i>
-      </div>
-      <a href="index.html" class="nav-item">
-        <i class="bi bi-house nav-icon"></i>
-        <span class="nav-label">Home</span>
-      </a>
-      <a href="calendar.html" class="nav-item">
-        <i class="bi bi-calendar-event nav-icon"></i>
-        <span class="nav-label">Calendar</span>
-      </a>
-      <a href="gmail.html" class="nav-item">
-        <i class="bi bi-envelope nav-icon"></i>
-        <span class="nav-label">Gmail</span>
-      </a>
-      <a href="#" class="nav-item" onclick="logout()">
-        <i class="bi bi-box-arrow-right nav-icon"></i>
-        <span class="nav-label">Logout</span>
-      </a>
+    <div class="sidebar-toggle" onclick="toggleSidebar()">
+      <i class="bi bi-list"></i>
     </div>
+    <a href="chatbot.html" class="nav-item" data-page="chatbot.html">
+      <i class="bi bi-chat-dots nav-icon"></i>
+      <span class="nav-label">Chat</span>
+    </a>
+    <a href="calendar.html" class="nav-item" data-page="calendar.html">
+      <i class="bi bi-calendar-event nav-icon"></i>
+      <span class="nav-label">Calendar</span>
+    </a>
+    <a href="gmail.html" class="nav-item" data-page="gmail.html">
+      <i class="bi bi-envelope nav-icon"></i>
+      <span class="nav-label">Gmail</span>
+    </a>
+    <a href="index.html" class="nav-item" data-page="index.html">
+      <i class="bi bi-house nav-icon"></i>
+      <span class="nav-label">Home</span>
+    </a>
+    <a href="#" class="nav-item" onclick="logout()">
+      <i class="bi bi-box-arrow-right nav-icon"></i>
+      <span class="nav-label">Logout</span>
+    </a>
+  </div>
 
     <div class="main-content">
       <div class="chat-wrapper">
@@ -316,6 +334,15 @@
       } catch (err) {
         console.error("Could not retrieve user information:", err);
       }
+      const currentPage = window.location.pathname.split('/').pop();
+    const navLinks = document.querySelectorAll('.sidebar .nav-item');
+
+    navLinks.forEach(link => {
+      const page = link.getAttribute('data-page');
+      if (page === currentPage) {
+        link.classList.add('active');
+      }
+    });
     });
 
     document.getElementById('add-calendar-link').addEventListener('click', async () => {

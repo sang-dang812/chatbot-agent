@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>AI Agent - by DHS</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <link href="img/favicon.ico" rel="icon">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Ubuntu:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <style>
+    #email-list {
+      background: #f0f7ff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(33, 150, 243, 0.1);
+    }
+
+    #email-list h3 {
+      color: #1976d2;
+      font-weight: 700;
+    }
+
+    .list-group-item {
+      border: 1px solid #bbdefb;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      transition: background-color 0.3s ease;
+      background-color: #ffffff;
+    }
+
+    .list-group-item:hover {
+      background-color: #e3f2fd;
+    }
+
+    .email-subject {
+      color: #0d47a1;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .email-snippet {
+      color: #555;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="container-fluid sticky-top bg-primary">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark p-0">
+        <a href="index.html" class="navbar-brand">
+          <h1 class="text-white">DANGHS<span class="text-dark">.</span>ID<span class="text-dark">.</span>VN</h1>
+        </a>
+        <button class="navbar-toggler ms-auto" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav ms-auto">
+            <a href="index.html" class="nav-item nav-link">Home</a>
+            <a href="about.html" class="nav-item nav-link">About</a>
+            <a href="service.html" class="nav-item nav-link">Services</a>
+            <a href="chatbot.html" class="nav-item nav-link active">Projects</a>
+            <a id="login-logout" class="nav-item nav-link" onclick="loginout()">Login</a>
+            <a id="user-link" class="nav-item nav-link" onclick="userinfo()">User</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+       <!-- Hero Start -->
+    <div class="container-fluid pt-5 bg-primary hero-header mb-5">
+        <div class="container pt-5">
+            
+        </div>
+    </div>
+    <!-- Hero End -->
+
+  <!-- Main -->
+  <div class="container my-5">
+    <button id="connect-gmail" class="btn btn-primary mb-4">📧 Kết nối Gmail</button>
+    <div id="response" class="alert mt-3 d-none" role="alert"></div>
+
+    <div id="email-list" class="mt-4">
+      <h3 class="mb-4">📥 5 Email Gần Nhất</h3>
+      <div id="emails" class="list-group"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="container-fluid bg-dark text-white-50 footer pt-5">
+    <div class="container py-1">
+      <div class="row g-5">
+        <div class="col-md-6 text-white">
+          <h1 class="text-white">DANGHS<span class="text-primary">.</span>ID<span class="text-primary">.</span>VN</h1>
+          <p>The AI Agent is developed by Dang Ha Sang – a student at Ho Chi Minh City University of Technology.</p>
+        </div>
+        <div class="col-md-6">
+          <h5 class="text-white mb-3">Get In Touch</h5>
+          <p><i class="fa fa-map-marker-alt me-2"></i>District 10, Ho Chi Minh City</p>
+          <p><i class="fa fa-phone-alt me-2"></i>+84 899993702</p>
+          <p><i class="fa fa-envelope me-2"></i>sang.danghs0812@hcmut.edu.vn</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const token = localStorage.getItem('token');
+
+    function parseJwt(token) {
+      try {
+        return JSON.parse(atob(token.split('.')[1]));
+      } catch {
+        return null;
+      }
+    }
+
+    function loginout() {
+      if (document.getElementById('login-logout').textContent === 'Logout') {
+        localStorage.removeItem('token');
+        location.href = '/index.html';
+      } else {
+        location.href = '/auth.html';
+      }
+    }
+
+    function userinfo() {
+      const info = document.getElementById('user-link');
+      location.href = info.textContent === 'User' ? '/auth.html' : '/userinfo.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const userLink = document.getElementById('user-link');
+      const login = document.getElementById('login-logout');
+
+      if (!token) {
+        login.textContent = 'Login';
+        userLink.href = 'auth.html';
+        return;
+      } else {
+        login.textContent = 'Logout';
+      }
+
+      try {
+        const res = await fetch('/user/getUserEmail', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        userLink.textContent = data || 'User';
+      } catch {
+        userLink.textContent = 'Login';
+        localStorage.removeItem('token');
+      }
+
+      // Load latest emails
+      try {
+        const res = await fetch('/oauth2/getLatestEmails', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!res.ok) throw new Error('Fail');
+
+        const emails = await res.json();
+        const emailListElement = document.getElementById('emails');
+        emailListElement.innerHTML = '';
+
+        emails.forEach(email => {
+          const subject = email.payload.headers.find(h => h.name === 'Subject')?.value || 'Không có tiêu đề';
+          const snippet = email.snippet || 'Không có nội dung';
+
+          const item = document.createElement('div');
+          item.className = 'list-group-item';
+          item.innerHTML = `
+            <div class="email-subject">${subject}</div>
+            <div class="email-snippet mt-2">${snippet}</div>
+          `;
+          emailListElement.appendChild(item);
+        });
+      } catch (e) {
+        alert('Không thể lấy email!');
+      }
+    });
+
+    document.getElementById("connect-gmail").addEventListener("click", () => {
+      if (!token) {
+        alert("Bạn chưa đăng nhập!");
+        return location.href = "/auth.html";
+      }
+
+      const payload = parseJwt(token);
+      const userId = payload?.userId;
+
+      if (!userId) return alert("Không tìm thấy userId!");
+
+      const redirectUri = encodeURIComponent("https://chatbot.danghs.id.vn/oauth2/callback");
+      const scope = encodeURIComponent("https://www.googleapis.com/auth/gmail.readonly");
+
+      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=${scope}&access_type=offline&include_granted_scopes=true&response_type=code&client_id=209295411223-8lqjch6erh3d6ns4n6in1sufjr3q11qa.apps.googleusercontent.com&redirect_uri=${redirectUri}&state=${userId}`;
+
+      window.location.href = authUrl;
+    });
+  </script>
+</body>
+
+</html>

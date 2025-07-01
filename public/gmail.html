@@ -305,7 +305,7 @@
       const redirectUri = encodeURIComponent("https://chatbot.danghs.id.vn/oauth2/callback");
       const scope = encodeURIComponent("https://www.googleapis.com/auth/gmail.readonly");
 
-      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=${scope}&access_type=offline&include_granted_scopes=true&response_type=code&client_id=209295411223-8lqjch6erh3d6ns4n6in1sufjr3q11qa.apps.googleusercontent.com&redirect_uri=${redirectUri}&state=${userId}`;
+      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=${scope}&access_type=offline&include_granted_scopes=true&response_type=code&client_id=209295411223-8lqjch6erh3d6ns4n6in1sufjr3q11qa.apps.googleusercontent.com&redirect_uri=${redirectUri}&prompt=consent&state=${userId}`;
       window.location.href = authUrl;
     });
 

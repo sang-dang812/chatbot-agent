@@ -6,210 +6,260 @@
   <title>AI Chat Assistant</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f0f2f5;
-      margin: 0;
-    }
-    .chat-wrapper {
-      max-width: 800px;
-      height: 90vh;
-      margin: 20px auto;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+    html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f0f2f5;
+}
+
+.chat-wrapper {
+  position: fixed;
+  top: 0;
+  left: 90px; /* sidebar width */
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+}
+
+.chat-box {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: #f9fafb;
+  font-size: 1.1rem;
+}
+
+.chat-input {
+  padding: 1rem;
+  display: flex;
+  border-top: 1px solid #ddd;
+  background: #fff;
+}
+
+
+    /* Sidebar nhỏ gọn */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 60px;
+      background-color: #3f51b5;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      align-items: center;
+      padding: 10px 0;
+      gap: 20px;
     }
-    .chat-header {
-      background: linear-gradient(135deg, #3f51b5, #5c6bc0);
-      padding: 1rem;
+
+    .sidebar a, .sidebar button {
       color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      position: relative;
-    }
-    .chat-header h1 {
       font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .chat-header-actions {
-      position: absolute;
-      right: 1rem;
-      top: 1rem;
-    }
-    .logout-btn {
-      background: #ffffff33;
+      text-decoration: none;
+      padding: 10px;
       border: none;
-      color: white;
-      padding: 0.4rem 0.8rem;
-      margin-left: 0.5rem;
-      border-radius: 8px;
+      background: none;
       cursor: pointer;
     }
-    .logout-btn:hover {
-      background: #ffffff55;
+
+    .sidebar a:hover, .sidebar button:hover {
+      background-color: #5c6bc0;
+      border-radius: 10px;
     }
+
+    .sidebar i {
+      display: block;
+    }
+
+    .sidebar [data-bs-toggle="tooltip"] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+
+    .chat-header {
+      background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+      padding: 1rem 2rem;
+      color: white;
+    }
+
+    .chat-header h1 {
+      font-size: 1.6rem;
+      margin: 0;
+    }
+
     .chat-box {
       flex: 1;
-      padding: 1rem;
+      padding: 2rem;
       overflow-y: auto;
       background-color: #f9fafb;
+      font-size: 1.1rem;
     }
+
     .message {
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       display: flex;
     }
+
     .message.sent {
-      align-self: flex-end;
       justify-content: flex-end;
     }
-    .message.received {
-      align-self: flex-start;
-    }
+
     .message-content {
-      background: #e1f5fe;
-      padding: 0.75rem 1rem;
+      max-width: 70%;
+      padding: 1rem 1.4rem;
       border-radius: 16px;
-      line-height: 1.4;
+      line-height: 1.5;
       white-space: pre-wrap;
     }
+
+    .message.received .message-content {
+      background: #e3f2fd;
+      text-align: left;
+    }
+
     .message.sent .message-content {
-      background: #c5e1a5;
+      background: #dcedc8;
+      text-align: right;
     }
-    .chat-input {
-      display: flex;
-      border-top: 1px solid #ddd;
-      padding: 0.75rem 1rem;
-      background: #fff;
-    }
+
+
     .chat-input input {
       flex: 1;
-      padding: 0.6rem 1rem;
+      padding: 0.8rem 1.2rem;
       border-radius: 20px;
       border: 1px solid #ccc;
       outline: none;
-      margin-right: 1rem;
+      font-size: 1rem;
     }
+
     .chat-input button {
       background: #3f51b5;
       color: white;
       border: none;
-      padding: 0.6rem 1.5rem;
+      padding: 0.8rem 1.6rem;
       border-radius: 20px;
+      margin-left: 1rem;
       cursor: pointer;
     }
+
     .chat-input button:hover {
       background: #303f9f;
     }
   </style>
 </head>
 <body>
+
+  <!-- Sidebar thu nhỏ -->
+  <div class="sidebar">
+    <a href="calendar.html" data-bs-toggle="tooltip" data-bs-placement="right" title="Calendar"><i class="bi bi-calendar2"></i></a>
+    <a href="gmail.html" data-bs-toggle="tooltip" data-bs-placement="right" title="Gmail"><i class="bi bi-envelope"></i></a>
+    <a href="index.html" data-bs-toggle="tooltip" data-bs-placement="right" title="Home"><i class="bi bi-house"></i></a>
+    <button onclick="logout()" data-bs-toggle="tooltip" data-bs-placement="right" title="Logout"><i class="bi bi-box-arrow-right"></i></button>
+  </div>
+
+  <!-- Khung chat -->
   <div class="chat-wrapper">
     <div class="chat-header">
-      <h1>🤖 Personal AI Agent</h1>
+      <h1>🤖 Personal AI Assistant</h1>
       <h6 id="userName" class="user-email">Loading infomation...</h6>
-      <div class="chat-header-actions">
-        <button class="logout-btn" onclick="logout()">Logout</button>
-        <button class="logout-btn" onclick="window.location.href='index.html'">Back</button>
-        <button class="logout-btn" onclick="window.location.href='calendar.html'">Calendar</button>
-      </div>
     </div>
 
     <div class="chat-box" id="chatBox">
       <div class="message received">
-        <div class="message-content">Hello, how can i help you today?</div>
+        <div class="message-content">Chào bạn! Tôi có thể giúp gì hôm nay? 😊</div>
       </div>
     </div>
 
     <div class="chat-input">
-      <input type="text" id="userInput" placeholder="Enter your message..." autocomplete="off"/>
-      <button id="sendButton">Send</button>
+      <input type="text" id="userInput" placeholder="Nhập tin nhắn..." />
+      <button id="sendButton">Gửi</button>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Script xử lý -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Tooltip khởi tạo
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+
     const token = localStorage.getItem('token');
-    if (!token) {
+     if (!token) {
       alert("Bạn cần đăng nhập trước.");
       window.location.href = '/index.html';
     }
-
-    window.addEventListener('DOMContentLoaded', async () => {
-      try {
-        const response = await fetch('/user/getUserEmail', {
-          method: 'GET',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await response.json();
-        if (data) document.getElementById('userName').textContent = data;
-      } catch (err) {
-        console.error("Không thể lấy thông tin người dùng:", err);
-      }
-    });
 
     document.getElementById('sendButton').addEventListener('click', sendMessage);
     document.getElementById('userInput').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') sendMessage();
     });
 
+    window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const response = await fetch('/user/getUserEmail', {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await response.json();
+    if (data) document.getElementById('userName').textContent = data;
+  } catch (err) {
+    console.error("Không thể lấy thông tin người dùng:", err);
+  }
+});
+
+
     async function sendMessage() {
       const userInput = document.getElementById('userInput').value;
       if (!userInput.trim()) return;
 
-      // Gửi tin nhắn của người dùng
-      const userMessage = createMessage(userInput, 'sent');
-      document.getElementById('chatBox').appendChild(userMessage);
+      const chatBox = document.getElementById('chatBox');
+      chatBox.appendChild(createMessage(userInput, 'sent'));
       document.getElementById('userInput').value = '';
 
-      // Thêm tin nhắn "Đang suy nghĩ"
-      const loadingMessage = createMessage("Let me think... 🤔", 'received');
-      loadingMessage.id = 'loading-message-' + Date.now();  // Tạo ID duy nhất cho mỗi tin nhắn
-      document.getElementById('chatBox').appendChild(loadingMessage);
-      scrollToBottom();
+      const loading = createMessage("Đang suy nghĩ... 🤔", 'received');
+      loading.id = 'loading-msg';
+      chatBox.appendChild(loading);
+      chatBox.scrollTop = chatBox.scrollHeight;
 
       try {
         const response = await fetch('/agent/sendMsg', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({ userInput })
         });
-
         const data = await response.json();
-        const rawOutput = data.output;
-        const formattedHTML = marked.parse(rawOutput);
-
-        // Thay thế tin nhắn "đang suy nghĩ" bằng câu trả lời thực tế
-        const loadingElement = document.getElementById(loadingMessage.id);
-        if (loadingElement) {
-          loadingElement.querySelector('.message-content').innerHTML = formattedHTML;
-        }
-        scrollToBottom();
-      } catch (error) {
-        console.error("Lỗi khi gọi API:", error);
+        const reply = data.output || 'Không có phản hồi.';
+        const loadingEl = document.getElementById('loading-msg');
+        if (loadingEl) loadingEl.querySelector('.message-content').textContent = reply;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch (err) {
+        console.error("Lỗi gọi API:", err);
       }
     }
 
-    function createMessage(text, type, isHTML = false) {
-      const messageDiv = document.createElement('div');
-      messageDiv.classList.add('message', type);
-      const messageContent = document.createElement('div');
-      messageContent.classList.add('message-content');
-      messageContent[isHTML ? 'innerHTML' : 'textContent'] = text;
-      messageDiv.appendChild(messageContent);
-      return messageDiv;
-    }
-
-    function scrollToBottom() {
-      const chatBox = document.getElementById('chatBox');
-      chatBox.scrollTop = chatBox.scrollHeight;
+    function createMessage(text, type) {
+      const message = document.createElement('div');
+      message.className = `message ${type}`;
+      const content = document.createElement('div');
+      content.className = 'message-content';
+      content.textContent = text;
+      message.appendChild(content);
+      return message;
     }
 
     function logout() {

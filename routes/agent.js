@@ -13,6 +13,9 @@ router.post('/sendMsg', authMiddleware, async (req, res) => {
     const agentId = result.rows[0]?.id;
     const calendar = await pool.query('SELECT calendar_link FROM users WHERE id = $1', [userId]);
     const calendar_link = calendar.rows[0]?.calendar_link;
+    const gmail = await pool.query('SELECT access_token FROM gmail_tokens WHERE user_id = $1', [userId]);
+    const access_token = gmail.rows[0]?.access_token;
+
     const response = await fetch('https://n8n.danghs.id.vn/webhook/createDate', {
       method: 'POST',
       headers: {
@@ -23,7 +26,8 @@ router.post('/sendMsg', authMiddleware, async (req, res) => {
         sessionId: userId,
         user_id: userId,
         id: agentId,
-        calendar_link: calendar_link
+        calendar_link: calendar_link,
+        access_token: access_token
       })
     });
 

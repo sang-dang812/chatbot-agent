@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -79,43 +79,103 @@
     </div>
     <!-- Hero End -->
 
-<!-- Services Start -->
+    <!-- About Me Start -->
+
+<!-- About Me End -->
+
+<!-- Project start -->
 <div class="container py-5">
     <div class="row align-items-center g-5">
-        <div class="col-lg-12 wow fadeIn" data-wow-delay="0.1s">
-            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">AI Agent Services</div>
-            <h2 class="mb-3">What Our AI Agent Offers</h2>
-            <p class="mb-4">Discover the powerful and convenient services our AI Agent provides to enhance user experience and improve productivity.</p>
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+            <img class="img-fluid rounded" src="./img/calendar-ai.webp" alt="Dang Ha Sang">
+        </div>
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">About my project</div>
+            <h2 class="mb-3 text-primary">AI Agent – Google Calendar Assistant</h2>
+            <p class="mb-3">This AI Agent is an intelligent virtual assistant designed to help users automatically schedule events on their Google Calendar. It listens to user commands, understands natural language, and interacts directly with Google services to create, update, or remind you about appointments – all in real-time.</p>
+            <p>From planning meetings to reminding personal tasks, this project simplifies scheduling with smart automation. Developed by Đặng Hà Sang, this tool empowers users with a personal AI scheduler available 24/7, securely and efficiently.</p>
+            <a href="projectinfo.html" class="btn btn-primary rounded-pill px-4">Read more</a>
         </div>
     </div>
 
-    <!-- Service Cards -->
-    <div class="row">
-        <!-- Service 1: Travel Assistant -->
-        <div class="col-md-4 wow fadeIn" data-wow-delay="0.1s">
-            <div class="card border-0 shadow-sm rounded">
-                <div class="card-body text-center">
-                    <i class="fas fa-suitcase-rolling fa-3x text-primary mb-3"></i>
-                    <h5 class="card-title">GG Calendar Automation</h5>
-                    <p class="card-text">The AI Agent integrates seamlessly with your Google Calendar, offering a smart assistant to help you efficiently manage your schedule. It automatically adds events, sets reminders, and even suggests optimal times for meetings or personal activities based on your availability. By understanding your preferences and routine, the AI Agent makes sure your calendar is always organized, ensuring you never miss an important event. Whether for work, leisure, or personal tasks, the AI Agent keeps your day on track with minimal effort.</p>
-                    <a href="calendar-ins.html" class="btn btn-primary">Learn More</a>
+    <!-- AI Agent Highlights Section -->
+    <div class="container py-5 position-relative">
+        <div class="row justify-content-center g-4">
+            <div class="col-md-4 d-flex justify-content-center">
+                <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center mb-3" style="width: 80px; height: 80px; font-size: 32px;">
+                    <i class="fas fa-robot"></i>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center mb-3" style="width: 80px; height: 80px; font-size: 32px;">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center mb-3" style="width: 80px; height: 80px; font-size: 32px;">
+                    <i class="fas fa-lock"></i>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4 wow fadeIn" data-wow-delay="0.1s">
-            <div class="card border-0 shadow-sm rounded">
-                <div class="card-body text-center">
-                    <i class="fas fa-suitcase-rolling fa-3x text-primary mb-3"></i>
-                    <h5 class="card-title">GG Gmail Automation</h5>
-                    <p class="card-text">The AI Agent connects to your Gmail and automatically summarizes your 5 most recent emails. It highlights key information like the subject and a brief preview, helping you quickly stay updated without opening each email individually.</p>
-                    <a href="gmail-ins.html" class="btn btn-primary">Learn More</a>
+        <div class="row justify-content-center g-4 mt-3">
+            <div class="col-md-4">
+                <div class="card shadow p-4" style="background-color: #cce5ff">
+                    <h5 class="text-center text-primary">Smart Features</h5>
+                    <ul>
+                        <li>Automatically understands and processes user scheduling requests.</li>
+                        <li>Communicates using natural language, supporting both Vietnamese and English.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow p-4" style="background-color: #cce5ff">
+                    <h5 class="text-center text-primary">Google Calendar Scheduling</h5>
+                    <ul>
+                        <li>Quickly creates events with time, title, description, and link.</li>
+                        <li>Secure and official integration with Google Calendar API.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow p-4" style="background-color: #cce5ff">
+                    <h5 class="text-center text-primary">Data Security</h5>
+                    <ul>
+                        <li>Stores user data using OAuth2 and encrypted protection.</li>
+                        <li>Only authorized users can access their personal calendar.</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- How to use section -->
+    <div class="container py-5">
+        <div class="card shadow p-4 bg-light">
+            <h4 class="text-primary mb-4">How to Use the AI Agent to Connect Your Google Calendar</h4>
+            <ol class="text-dark">
+                <li><strong>Step 1:</strong> Go to your <a href="https://calendar.google.com" target="_blank">Google Calendar</a> and open the settings of the calendar you want to use.
+                <div class="text-center my-3">
+                  <img src="./img/calendar-2.png" class="img-fluid rounded shadow" alt="Open Google Calendar settings" style="max-width: 600px;">
+                </div>
+                </li>
+                <li><strong>Step 2:</strong> Under the "Share with specific people" section, add <code>sang.danghs0812@hcmut.edu.vn</code> with <strong>Make changes and manage sharing</strong> permission.
+                <div class="text-center my-3">
+                  <img src="./img/calendar-3.png" class="img-fluid rounded shadow" alt="Open Google Calendar settings" style="max-width: 600px;">
+                </div>
+                </li>
+                <li><strong>Step 3:</strong> Copy the <strong>Calendar ID</strong> from the calendar settings, then paste it into the input field on this website and confirm.
+                <div class="text-center my-3">
+                  <img src="./img/calendar-4.png" class="img-fluid rounded shadow" alt="Open Google Calendar settings" style="max-width: 600px;">
+                </div>
+                </li>
+            </ol>
+            <p class="mb-0 text-muted">Once shared, the AI agent will be able to help you schedule events directly into your calendar on your behalf.</p>
+        </div>
+    </div>
+    <a href="calendar.html" class="btn btn-primary rounded-pill px-4">Start to use</a>
 </div>
-<!-- Services End -->
+<!-- Project end -->
+
 
 
 
@@ -178,10 +238,10 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
    <script>
+       const token = localStorage.getItem('token');
   document.addEventListener('DOMContentLoaded', async () => {
     const userLink = document.getElementById('user-link');
     const login = document.getElementById('login-logout');
-    const token = localStorage.getItem('token');
 
     if (!token) {
       login.textContent = 'Login';
@@ -233,6 +293,40 @@
         if (info.textContent == 'User') window.location.href = '/auth.html';
         else window.location.href = '/userinfo.html';
     }
+
+    document.getElementById('eventForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const data = document.getElementById('link').value;
+    
+
+      try {
+        const res = await fetch('/calendar/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // nếu có
+          },
+          body: JSON.stringify({data:data})
+        });
+
+        const result = await res.json();
+
+        const responseDiv = document.getElementById('response');
+        responseDiv.classList.remove('d-none');
+        responseDiv.classList.add('alert-success');
+        responseDiv.innerHTML = 'Đã thêm link Google calendar thành công';
+
+      } catch (error) {
+        const responseDiv = document.getElementById('response');
+        responseDiv.classList.remove('d-none');
+        responseDiv.classList.add('alert-danger');
+        responseDiv.textContent = '❌ Lỗi khi thêm. Vui lòng thử lại.';
+        console.error(error);
+      }
+    });
+
+
 </script>
 
 </body>

@@ -1,0 +1,143 @@
+<!-- Gmail Feature Guide Page - Rewritten for Gmail Usage Instructions -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>AI Agent Gmail Guide - by DHS</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="img/favicon.ico" rel="icon">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Ubuntu:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar Start -->
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark p-0">
+                <a href="index.html" class="navbar-brand">
+                    <h1 class="text-white">DANGHS<span class="text-dark">.</span>ID<span class="text-dark">.</span>VN</h1>
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="index.html" class="nav-item nav-link">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="service.html" class="nav-item nav-link active">Services</a>
+                        <a href="chatbot.html" class="nav-item nav-link">Projects</a>
+                        <a id="login-logout" class="nav-item nav-link" onclick="loginout()">Login</a>
+                        <a id="user-link" class="nav-item nav-link" onclick="userinfo()">User</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Hero Start -->
+    <div class="container-fluid pt-5 bg-primary hero-header mb-5">
+        <div class="container pt-5">
+            
+        </div>
+    </div>
+    <!-- Hero End -->
+
+    <!-- Gmail Feature Introduction -->
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <img src="./img/gmail-1.webp" class="img-fluid rounded shadow" alt="Gmail Guide Illustration">
+            </div>
+            <div class="col-lg-6">
+                <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">AI Agent Feature</div>
+                <h2 class="mb-3 text-primary">View and Summarize Gmail with Ease</h2>
+                <p class="mb-3">The AI Agent connects to your Gmail account to show the 5 most recent emails. It extracts important info like subject and content preview, so you can stay up-to-date in seconds.</p>
+                <p class="mb-3">This feature is useful for quick email checking, especially when you're busy or on the go. You don’t need to open your inbox – just let the assistant summarize it for you.</p>
+                <a href="gmail.html" class="btn btn-primary rounded-pill px-4">Try it Now</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step-by-Step Instructions -->
+    <div class="container py-5">
+        <div class="card shadow p-4 bg-light">
+            <h4 class="text-primary mb-4">How to Connect Gmail to Your AI Agent</h4>
+            <ol class="text-dark">
+                <li><strong>Step 1:</strong> Click the "Kết nối Gmail" (Connect Gmail) button on the Gmail feature page.</li>
+                <li><strong>Step 2:</strong> Log in with your Google account and grant read-only access to your Gmail.</li>
+                <li><strong>Step 3:</strong> Return to the site and view your latest emails directly in the interface.</li>
+            </ol>
+            <p class="text-muted">All permissions are handled securely via OAuth2 and your emails are not stored.</p>
+        </div>
+        <a href="gmail.html" class="btn btn-primary rounded-pill px-4">Start to use</a>
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 footer pt-5">
+        <div class="container py-1">
+            <div class="row g-5">
+                <div class="col-md-6">
+                    <h1 class="text-white">DANGHS<span class="text-primary">.</span>ID<span class="text-primary">.</span>VN</h1>
+                    <p>The AI Agent is developed by Dang Ha Sang – a student at Ho Chi Minh City University of Technology.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-white mb-3">Contact</h5>
+                    <p><i class="fa fa-map-marker-alt me-2"></i>District 10, Ho Chi Minh City</p>
+                    <p><i class="fa fa-phone-alt me-2"></i>+84 899993702</p>
+                    <p><i class="fa fa-envelope me-2"></i>sang.danghs0812@hcmut.edu.vn</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const token = localStorage.getItem('token');
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userLink = document.getElementById('user-link');
+            const login = document.getElementById('login-logout');
+
+            if (!token) {
+                login.textContent = 'Login';
+                userLink.href = 'auth.html';
+                return;
+            }
+
+            login.textContent = 'Logout';
+
+            try {
+                const res = await fetch('/user/getUserEmail', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                userLink.textContent = data || 'User';
+            } catch {
+                userLink.textContent = 'Login';
+                userLink.href = 'auth.html';
+                localStorage.removeItem('token');
+            }
+        });
+
+        function loginout() {
+            localStorage.removeItem('token');
+            window.location.href = '/index.html';
+        }
+
+        function userinfo() {
+            const info = document.getElementById('user-link');
+            if (info.textContent === 'User') window.location.href = '/auth.html';
+            else window.location.href = '/userinfo.html';
+        }
+    </script>
+</body>
+
+</html>

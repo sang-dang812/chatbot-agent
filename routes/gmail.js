@@ -25,10 +25,10 @@ router.get('/callback' ,async (req, res) => {
   const expires_at = new Date(Date.now() + expires_in * 1000);
 
   console.log(tokenResponse.data);
-//   await pool.query(
-//     'INSERT INTO gmail_tokens (user_id, access_token, refresh_token, expires_at) VALUES ($1, $2, $3, $4) ON CONFLICT (user_id) DO UPDATE SET access_token=$2, refresh_token=$3, expires_at=$4',
-//     [userId, access_token, refresh_token, expires_at]
-//   );
+  await pool.query(
+    'INSERT INTO gmail_tokens (user_id, access_token, refresh_token, expires_at) VALUES ($1, $2, $3, $4) ON CONFLICT (user_id) DO UPDATE SET access_token=$2, refresh_token=$3, expires_at=$4',
+    [userId, access_token, refresh_token, expires_at]
+  );
 
   res.json(tokenResponse.data,userId);
 });

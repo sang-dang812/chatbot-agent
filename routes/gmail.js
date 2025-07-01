@@ -30,7 +30,7 @@ router.get('/callback' ,async (req, res) => {
 //     [userId, access_token, refresh_token, expires_at]
 //   );
 
-  res.json(tokenResponse.data);
+  res.json(tokenResponse.data,userId);
 });
 
 module.exports = router;

@@ -92,9 +92,12 @@
   </div>
 <!-- About Me End -->
 <div id="email-list" class="mt-4">
-  <h3>5 Email Gần Nhất</h3>
-  <ul id="emails"></ul>
+  <h3 class="mb-4">5 Email Gần Nhất</h3>
+  <div id="emails" class="list-group">
+    <!-- Các email sẽ được thêm vào đây -->
+  </div>
 </div>
+
 
 
 
@@ -201,29 +204,42 @@
       userLink.href = 'auth.html';
     }
 
-    try {
-      const response = await fetch('/oauth2/getLatestEmails', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        }
-      });
-
-      if (response.ok) {
-        const emails = await response.json();
-        const emailListElement = document.getElementById('emails');
-        
-        // Hiển thị 5 email gần nhất
-        emails.forEach(email => {
-          const li = document.createElement('li');
-          li.innerHTML = `<strong>${email.snippet}</strong>`;
-          emailListElement.appendChild(li);
-        });
-      } else {
-        alert('Không thể lấy email.');
+   try {
+    const response = await fetch('/oauth2/getLatestEmails', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
       }
-    } catch (error) {
-      console.error('Lỗi khi lấy email:', error);
+    });
+
+    if (response.ok) {
+      const emails = await response.json();
+      
+      // Xóa tất cả các email cũ trước khi thêm mới
+      emailListElement.innerHTML = '';
+
+      // Hiển thị 5 email gần nhất
+      emails.forEach(email => {
+        // Lấy tiêu đề và nội dung email từ email
+        const subject = email.payload.headers.find(header => header.name === 'Subject')?.value || 'Không có tiêu đề';
+        const snippet = email.snippet || 'Không có nội dung';
+        
+        // Tạo phần tử email đẹp mắt hơn với Bootstrap
+        const emailElement = document.createElement('a');
+        emailElement.classList.add('list-group-item', 'list-group-item-action', 'py-3', 'px-4');
+        
+        emailElement.innerHTML = `
+          <h5 class="mb-1">${subject}</h5>
+          <p class="mb-1 text-muted">${snippet}</p>
+        `;
+
+        emailListElement.appendChild(emailElement);
+      });
+    } else {
+      alert('Không thể lấy email.');
     }
+  } catch (error) {
+    console.error('Lỗi khi lấy email:', error);
+  }
     
   });
     function loginout() {

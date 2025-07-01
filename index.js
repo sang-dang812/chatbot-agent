@@ -16,7 +16,7 @@ app.use('/auth', authRoutes);
 app.use('/user', userRoutes); 
 app.use('/agent', agentRoutes);
 app.use('/calendar', calendarRoutes);
-//app.use('/oauth2', oauth2Routes);
+app.use('/oauth2', oauth2Routes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

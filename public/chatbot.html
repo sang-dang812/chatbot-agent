@@ -221,46 +221,55 @@
 
 
     async function sendMessage() {
-      const userInput = document.getElementById('userInput').value;
-      if (!userInput.trim()) return;
+  const userInput = document.getElementById('userInput').value;
+  if (!userInput.trim()) return;
 
-      const chatBox = document.getElementById('chatBox');
-      chatBox.appendChild(createMessage(userInput, 'sent'));
-      document.getElementById('userInput').value = '';
+  const userMessage = createMessage(userInput, 'sent');
+  document.getElementById('chatBox').appendChild(userMessage);
+  document.getElementById('userInput').value = '';
 
-      const loading = createMessage("Đang suy nghĩ... 🤔", 'received');
-      loading.id = 'loading-msg';
-      chatBox.appendChild(loading);
-      chatBox.scrollTop = chatBox.scrollHeight;
+  // 👇 tạo ID duy nhất cho từng "đang suy nghĩ..."
+  const loadingId = 'loading-message-' + Date.now();
+  const loadingMessage = createMessage("Let me think... 🤔", 'received');
+  loadingMessage.id = loadingId;
+  document.getElementById('chatBox').appendChild(loadingMessage);
+  scrollToBottom();
 
-      try {
-        const response = await fetch('/agent/sendMsg', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ userInput })
-        });
-        const data = await response.json();
-        const reply = data.output || 'Không có phản hồi.';
-        const loadingEl = document.getElementById('loading-msg');
-        if (loadingEl) loadingEl.querySelector('.message-content').textContent = reply;
-        chatBox.scrollTop = chatBox.scrollHeight;
-      } catch (err) {
-        console.error("Lỗi gọi API:", err);
-      }
+  try {
+    const response = await fetch('/agent/sendMsg', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ userInput })
+    });
+
+    const data = await response.json();
+    const rawOutput = data.output;
+    const formattedHTML = marked.parse(rawOutput);
+
+    const loadingElement = document.getElementById(loadingId);
+    if (loadingElement) {
+      loadingElement.querySelector('.message-content').innerHTML = formattedHTML;
     }
+    scrollToBottom();
+  } catch (error) {
+    console.error("Lỗi khi gọi API:", error);
+  }
+}
 
-    function createMessage(text, type) {
-      const message = document.createElement('div');
-      message.className = `message ${type}`;
-      const content = document.createElement('div');
-      content.className = 'message-content';
-      content.textContent = text;
-      message.appendChild(content);
-      return message;
-    }
+
+function createMessage(text, type, isHTML = false) {
+  const messageDiv = document.createElement('div');
+  messageDiv.classList.add('message', type);
+  const messageContent = document.createElement('div');
+  messageContent.classList.add('message-content');
+  messageContent[isHTML ? 'innerHTML' : 'textContent'] = text;
+  messageDiv.appendChild(messageContent);
+  return messageDiv;
+}
+
 
     function logout() {
       localStorage.removeItem('token');

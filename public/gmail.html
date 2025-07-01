@@ -91,6 +91,10 @@
     <div id="response" class="alert mt-4 d-none" role="alert"></div>
   </div>
 <!-- About Me End -->
+<div id="email-list" class="mt-4">
+  <h3>5 Email Gần Nhất</h3>
+  <ul id="emails"></ul>
+</div>
 
 
 
@@ -195,6 +199,30 @@
       console.error('Lỗi khi lấy thông tin người dùng:', error);
       userLink.textContent = 'Login';
       userLink.href = 'auth.html';
+    }
+
+    try {
+      const response = await fetch('/getLatestEmails', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+
+      if (response.ok) {
+        const emails = await response.json();
+        const emailListElement = document.getElementById('emails');
+        
+        // Hiển thị 5 email gần nhất
+        emails.forEach(email => {
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${email.snippet}</strong>`;
+          emailListElement.appendChild(li);
+        });
+      } else {
+        alert('Không thể lấy email.');
+      }
+    } catch (error) {
+      console.error('Lỗi khi lấy email:', error);
     }
     
   });

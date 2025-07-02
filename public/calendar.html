@@ -349,58 +349,49 @@
 
   });
 
-    document.getElementById('add-calendar-link').addEventListener('click', async () => {
-      const calendarLink = document.getElementById('calendar-link').value.trim();
-      if (calendarLink) {
-        const responseDiv = document.getElementById('calendar-response');
-        responseDiv.classList.remove('d-none');
-        responseDiv.textContent = `Calendar link "${calendarLink}" added successfully!`;
-      } else {
-        alert('Please enter a valid calendar link');
-      }
+document.getElementById('add-calendar-link').addEventListener('click', async () => {
+  const calendarLink = document.getElementById('calendar-link').value.trim();
+  const token = localStorage.getItem("token");
+  const responseDiv = document.getElementById('calendar-response');
+
+  if (!calendarLink) {
+    alert('Please enter a valid calendar link');
+    return;
+  }
+
+  try {
+    const res = await fetch("/calendar/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ data: calendarLink })
     });
 
-    document.getElementById('sendButton').addEventListener('click', sendMessage);
-    document.getElementById('userInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') sendMessage();
-    });
+    const result = await res.json();
 
-    async function sendMessage() {
-      const userInput = document.getElementById('userInput').value;
-      if (!userInput.trim()) return;
-
-      const userMessage = createMessage(userInput, 'sent');
-      document.getElementById('chatBox').appendChild(userMessage);
-      document.getElementById('userInput').value = '';
-
-      const loadingMessage = createMessage("Let me think... 🤔", 'received');
-      loadingMessage.id = 'loading-message-' + Date.now();
-      document.getElementById('chatBox').appendChild(loadingMessage);
-      scrollToBottom();
-
-      try {
-        const response = await fetch('/agent/sendMsg', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ userInput })
-        });
-
-        const data = await response.json();
-        const rawOutput = data.output;
-        const formattedHTML = marked.parse(rawOutput);
-
-        const loadingElement = document.getElementById(loadingMessage.id);
-        if (loadingElement) {
-          loadingElement.querySelector('.message-content').innerHTML = formattedHTML;
-        }
-        scrollToBottom();
-      } catch (error) {
-        console.error("Error calling the API:", error);
-      }
+    if (res.ok) {
+      responseDiv.classList.remove('d-none');
+      responseDiv.textContent = `✅ ${result.message}`;
+      setTimeout(() => {
+        location.reload();
+      }, 5000);
+    } else {
+      responseDiv.classList.remove('d-none');
+      responseDiv.textContent = `❌ ${result.error || "Failed to update calendar link"}`;
     }
+  } catch (err) {
+    console.error("Error saving calendar link:", err);
+    responseDiv.classList.remove('d-none');
+    responseDiv.textContent = "❌ An error occurred while saving the calendar link.";
+  }
+});
+
+
+
+
+
 
     function createMessage(text, type, isHTML = false) {
       const messageDiv = document.createElement('div');

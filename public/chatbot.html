@@ -411,8 +411,11 @@
 
     function scrollToBottom() {
       const chatBox = document.getElementById('chatBox');
-      chatBox.scrollTop = chatBox.scrollHeight;
+      requestAnimationFrame(() => {
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
     }
+
 
     function logout() {
       localStorage.removeItem('token');

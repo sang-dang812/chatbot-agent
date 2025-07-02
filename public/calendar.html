@@ -308,10 +308,16 @@
           </div>
         </div>
 
-        <div class="chat-input">
+        <!-- <div class="chat-input">
           <input type="text" id="userInput" placeholder="Ask your assistant..." autocomplete="off"/>
           <button id="sendButton">Send</button>
+        </div> -->
+
+        <div id="calendarContainer" class="text-center my-5">
+          
         </div>
+
+
       </div>
     </div>
   </div>
@@ -343,7 +349,9 @@
         link.classList.add('active');
       }
     });
-    });
+    await loadEmbeddedCalendar();
+
+  });
 
     document.getElementById('add-calendar-link').addEventListener('click', async () => {
       const calendarLink = document.getElementById('calendar-link').value.trim();
@@ -422,6 +430,29 @@
       const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('expanded');
     }
+    async function loadEmbeddedCalendar() {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("/getCalendarId", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await response.json();
+      const calendarId = encodeURIComponent(data.calendar_link);
+      const iframe = document.createElement("iframe");
+
+      iframe.src = `https://calendar.google.com/calendar/embed?src=${calendarId}&ctz=Asia%2FHo_Chi_Minh`;
+      iframe.style.border = "0";
+      iframe.width = "800";
+      iframe.height = "600";
+      iframe.frameBorder = "0";
+      iframe.scrolling = "no";
+
+      document.getElementById("calendarContainer").appendChild(iframe);
+  }
+
   </script>
 </body>
 </html>

@@ -16,4 +16,17 @@ router.post("/create",authMiddleware, async(req,res) => {
   }
 })
 
+router.get("/getCalendarId", authMiddleware, async(req,res) => {
+    const userId = req.user.userId;
+    try {
+        const result = await pool.query('SELECT calendar_link FROM users WHERE id = $1', [userId]);
+        const calendar_link = result.rows[0]?.calendar_link;
+        res.status(200).json({ calendar_link: calendar_link});
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Lỗi khi lấy dữ liệu' });
+  }
+})
+
 module.exports = router;

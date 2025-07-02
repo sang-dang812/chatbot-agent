@@ -25,8 +25,8 @@ router.post('/register', async (req, res) => {
 
     // Tạo user mới
     const userResult = await pool.query(
-      'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING *',
-      [email, hash]
+      'INSERT INTO users (email, password_hash, calendar_link) VALUES ($1, $2, $3) RETURNING *',
+      [email, hash, email]
     );
 
     const user = userResult.rows[0];

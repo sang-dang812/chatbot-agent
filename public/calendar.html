@@ -433,7 +433,7 @@
     async function loadEmbeddedCalendar() {
       const token = localStorage.getItem("token");
 
-      const response = await fetch("/getCalendarId", {
+      const response = await fetch("/calendar/getCalendarId", {
         headers: {
           Authorization: `Bearer ${token}`
         }

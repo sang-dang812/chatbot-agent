@@ -95,13 +95,13 @@ router.post('/addNewPersonality', authMiddleware, async (req, res) => {
   }
 });
 
-router.delete('/chat-history/:sessionId', authMiddleware, async (req, res) => {
-  const { sessionId } = req.params;
+router.delete('/chat-history', authMiddleware, async (req, res) => {
+  const user_id = req.user.userId;
 
   try {
     const result = await pool.query(
       'DELETE FROM n8n_chat_histories WHERE session_id = $1',
-      [sessionId]
+      [user_id]
     );
 
     res.status(200).json({

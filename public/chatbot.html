@@ -344,6 +344,28 @@
         }
         scrollToBottom();
       } catch (error) {
+        try {
+          const response = await fetch(`/agent/chat-history/${sessionId}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            alert(`✅ ${data.message} (${data.rowsAffected} dòng đã bị xoá)`);
+            console.log(data);
+          } else {
+            alert(`❌ Lỗi: ${data.error}`);
+            console.error(data);
+          }
+        } catch (err) {
+          alert("❌ Lỗi hệ thống khi gọi API.");
+          console.error("Lỗi FE:", err);
+        }
         console.error("Lỗi khi gọi API:", error);
       }
     }

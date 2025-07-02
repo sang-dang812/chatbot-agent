@@ -95,5 +95,24 @@ router.post('/addNewPersonality', authMiddleware, async (req, res) => {
   }
 });
 
+router.delete('/chat-history/:sessionId', authMiddleware, async (req, res) => {
+  const { sessionId } = req.params;
+
+  try {
+    const result = await pool.query(
+      'DELETE FROM n8n_chat_histories WHERE session_id = $1',
+      [sessionId]
+    );
+
+    res.status(200).json({
+      message: 'Đã xoá toàn bộ lịch sử chat thành công',
+      rowsAffected: result.rowCount
+    });
+  } catch (err) {
+    console.error('Lỗi khi xoá chat history:', err);
+    res.status(500).json({ error: 'Lỗi server khi xoá chat history' });
+  }
+});
+
 
 module.exports = router;

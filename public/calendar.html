@@ -273,6 +273,7 @@
     flex-direction: row;
     justify-content: space-around;
     padding: 0.5rem;
+    min-height: 60px;
   }
 
   .sidebar.expanded {
@@ -365,7 +366,7 @@
     if (!token) {
       alert("You need to log in first.");
       window.location.href = '/index.html';
-    }
+    }    
 
     window.addEventListener('DOMContentLoaded', async () => {
       try {

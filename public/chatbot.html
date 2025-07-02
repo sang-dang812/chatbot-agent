@@ -344,6 +344,10 @@
         }
         scrollToBottom();
       } catch (error) {
+        const loadingElement = document.getElementById(loadingMessage.id);
+        if (loadingElement) {
+          loadingElement.querySelector('.message-content').textContent = "❌ Xin lỗi, đã xảy ra lỗi khi xử lý yêu cầu của bạn.";
+        }
         try {
           const response = await fetch(`/agent/chat-history`, {
             method: 'DELETE',

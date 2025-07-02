@@ -263,6 +263,13 @@
       background-color: #d1ffd8;
       border-radius: 8px;
     }
+
+    #calendarContainer iframe {
+      width: 100%;
+      max-width: 800px;
+      height: 600px;
+      border: none;
+    }
     @media (max-width: 768px) {
   .layout {
     flex-direction: column;
@@ -304,6 +311,10 @@
     margin-right: 0;
     font-size: 1.4rem;
   }
+  #calendarContainer iframe {
+    height: 400px;
+  }
+
 }
 
   </style>
@@ -476,8 +487,6 @@ document.getElementById('add-calendar-link').addEventListener('click', async () 
 
       iframe.src = `https://calendar.google.com/calendar/embed?src=${calendarId}&ctz=Asia%2FHo_Chi_Minh`;
       iframe.style.border = "0";
-      iframe.width = "800";
-      iframe.height = "600";
       iframe.frameBorder = "0";
       iframe.scrolling = "no";
 

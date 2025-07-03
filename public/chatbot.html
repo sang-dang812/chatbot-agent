@@ -415,12 +415,12 @@
       return messageDiv;
     }
 
-    function scrollToBottom() {
-      const chatBox = document.getElementById('chatBox');
-      requestAnimationFrame(() => {
-        chatBox.scrollTop = chatBox.scrollHeight;
-      });
-    }
+function scrollToBottom() {
+  const chatBox = document.getElementById('chatBox');
+  console.log("Scroll height:", chatBox.scrollHeight);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
 
 
 

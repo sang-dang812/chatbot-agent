@@ -61,7 +61,10 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     const token = localStorage.getItem('token');
-
+    if (!token) {
+      alert("You need to log in first.");
+      window.location.href = '/index.html';
+    }  
 
     window.addEventListener('DOMContentLoaded', async () => {
       try {

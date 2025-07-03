@@ -417,9 +417,12 @@
 
 function scrollToBottom() {
   const chatBox = document.getElementById('chatBox');
-  console.log("Scroll height:", chatBox.scrollHeight);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  const lastMessage = chatBox.lastElementChild;
+  if (lastMessage) {
+    lastMessage.scrollIntoView({ behavior: 'smooth' });
+  }
 }
+
 
 
 

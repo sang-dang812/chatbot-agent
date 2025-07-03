@@ -39,6 +39,7 @@
     .sidebar.expanded {
       align-items: flex-start;
       padding-left: 1rem;
+      width:200px;
     }
 
     .sidebar-toggle {
@@ -227,6 +228,7 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
+    width:100%;
   }
 
   .nav-label {
@@ -397,6 +399,7 @@
         }
         console.error("Lỗi khi gọi API:", error);
       }
+       scrollToBottom();
     }
 
     function createMessage(text, type, isHTML = false) {

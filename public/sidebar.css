@@ -171,6 +171,8 @@
       line-height: 1.4;
       white-space: pre-wrap;
       max-width: 70%;
+      word-break: break-word;
+        overflow-wrap: anywhere;
     }
 
     .message.sent .message-content {

@@ -8,6 +8,8 @@ const fs = require('fs');
 const FormData = require('form-data');
 const axios = require('axios');
 
+const upload = multer({ dest: '../uploadFile/' }); // Bạn có thể tùy chỉnh đường dẫn lưu file
+
 
 
 router.post('/sendMsg', authMiddleware, async (req, res) => {
@@ -120,7 +122,7 @@ router.delete('/chat-history', authMiddleware, async (req, res) => {
   }
 });
 
-router.post('/uploadFile', authMiddleware, async (req, res) => {
+router.post('/uploadFile', authMiddleware, upload.single('file'), async (req, res) => {
   const userId = req.user.userId; // Lấy userId từ token đã xác thực
   const file = req.file;  // Lấy file gửi lên
 

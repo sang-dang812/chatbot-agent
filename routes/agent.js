@@ -9,6 +9,7 @@ const FormData = require('form-data');
 const axios = require('axios');
 
 
+
 router.post('/sendMsg', authMiddleware, async (req, res) => {
   const userId = req.user.userId;
   const msg = req.body.userInput;
@@ -119,7 +120,7 @@ router.delete('/chat-history', authMiddleware, async (req, res) => {
   }
 });
 
-router.post('/uploadFile', authMiddleware, upload.single('file'), async (req, res) => {
+router.post('/uploadFile', authMiddleware, async (req, res) => {
   const userId = req.user.userId; // Lấy userId từ token đã xác thực
   const file = req.file;  // Lấy file gửi lên
 

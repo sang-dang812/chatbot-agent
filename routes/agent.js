@@ -3,6 +3,11 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
 const pool = require('../db');
+const multer = require('multer');
+const fs = require('fs');
+const FormData = require('form-data');
+const axios = require('axios');
+
 
 router.post('/sendMsg', authMiddleware, async (req, res) => {
   const userId = req.user.userId;
@@ -114,5 +119,48 @@ router.delete('/chat-history', authMiddleware, async (req, res) => {
   }
 });
 
+router.post('/uploadFile', authMiddleware, upload.single('file'), async (req, res) => {
+  const userId = req.user.userId; // Lấy userId từ token đã xác thực
+  const file = req.file;  // Lấy file gửi lên
+
+  if (!file) {
+    return res.status(400).json({ error: 'Không có file nào được gửi.' });
+  }
+
+  try {
+    // Lấy thông tin từ database (ví dụ như user_id, access_token, ... nếu cần)
+    const result = await pool.query('SELECT id FROM agents WHERE user_id = $1', [userId]);
+    const agentId = result.rows[0]?.id;
+    const calendar = await pool.query('SELECT calendar_link FROM users WHERE id = $1', [userId]);
+    const calendar_link = calendar.rows[0]?.calendar_link;
+    const gmail = await pool.query('SELECT access_token FROM gmail_tokens WHERE user_id = $1', [userId]);
+    const access_token = gmail.rows[0]?.access_token;
+
+    // Tạo form data để gửi file qua n8n
+    const form = new FormData();
+    form.append('sessionId', userId);
+    form.append('user_id', userId);
+    form.append('id', agentId);
+    form.append('calendar_link', calendar_link);
+    form.append('access_token', access_token);
+
+    // Thêm file vào form data
+    form.append('file', fs.createReadStream(file.path), file.originalname);
+
+    // Gửi file tới n8n
+    const response = await axios.post('https://n8n.danghs.id.vn/webhook/file', form, {
+      headers: form.getHeaders(),
+    });
+
+    // Xoá file sau khi đã gửi tới n8n
+    fs.unlinkSync(file.path);
+
+    // Trả kết quả từ n8n về frontend
+    res.json(response.data);
+  } catch (err) {
+    console.error('Lỗi khi gọi n8n:', err);
+    res.status(500).json({ error: 'Đã có lỗi xảy ra khi gửi đến n8n.' });
+  }
+});
 
 module.exports = router;

@@ -208,36 +208,32 @@
       background: #303f9f;
     }
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
   .layout {
     flex-direction: column;
   }
 
   .main-content {
-  margin-top: 50px;
-  margin-left: 0px; /* 👈 đẩy sang phải bằng chiều rộng sidebar */
-  transition: margin-left 0.3s ease;
-}
-
-.sidebar.expanded ~ .main-content {
-  margin-left: 0px;
-  margin-top: 440px; /* 👈 nếu sidebar mở rộng */
-}
+    margin-top: 60px;
+    margin-left: 0px;
+    transition: none;
+  }
 
   .sidebar {
     width: 100%;
     height: auto;
     flex-direction: row;
     justify-content: space-around;
-    min-height:60px;
-    padding:0px;
+    min-height: 60px;
+    padding: 0;
+    position: static;
   }
 
   .sidebar.expanded {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
-    width:100%;
+    width: 100%;
   }
 
   .nav-label {
@@ -260,5 +256,53 @@
   .nav-icon {
     margin-right: 0;
     font-size: 1.4rem;
+  }
+
+  .chat-input {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .chat-input input {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .chat-input button {
+    width: 100%;
+    padding: 0.6rem 1rem;
+  }
+}
+/* Responsive thêm cho màn hình rất nhỏ */
+@media (max-width: 480px) {
+  .chat-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .chat-header h6 {
+    font-size: 0.75rem;
+  }
+
+  .message-content {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    max-width: 90%;
+  }
+
+  .chat-input {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .chat-input input {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .chat-input button {
+    width: 100%;
+    padding: 0.6rem 1rem;
   }
 }

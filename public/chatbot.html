@@ -65,10 +65,7 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     const token = localStorage.getItem('token');
-    if (!token) {
-      alert("You need to log in first.");
-      window.location.href = '/index.html';
-    }
+
 
     document.addEventListener("DOMContentLoaded", async () => {
       const response = await fetch('/user/getUserEmail', {
@@ -101,6 +98,7 @@
         appendMessage(userInput, 'sent');
 
         const loading = appendMessage("Let me think... 🤔", 'received');
+        document.getElementById('userInput').value = '';
         const response = await fetch('/agent/sendMsg', {
           method: 'POST',
           headers: {
@@ -122,6 +120,7 @@
         formData.append('file', file);
 
         const loading = appendMessage("📤 Đang tải file...", 'received');
+        document.getElementById('userInput').value = '';
         const response = await fetch('/agent/uploadFile', {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` },
@@ -132,7 +131,7 @@
         fileInput.value = ''; // reset file
       }
 
-      document.getElementById('userInput').value = '';
+      
     }
 
     function appendMessage(text, type) {
